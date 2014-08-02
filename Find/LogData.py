@@ -1,3 +1,6 @@
+"""This module can be used to extract speciffic types of data from a log file. """
+
+
 """
 Copyright (c) 2014, Are Hansen - Honeypot Development.
 
@@ -24,42 +27,20 @@ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 
-__author__ = 'Are Hansen'
-__date__ = '2014, July 25'
-__version__ = '0.0.1'
+def startEnd(loglines, sparam, index):
+    """Expects that the loglines object is a list containg lines of a log file. From the first and
+    last line of the log file it will grab the time stamps. Even tho logfiles might differ in what
+    data they contain and how they are constructed, they have one thing in common. The beginning of 
+    each line is a timestamp. The rest of the line might be divided by whitespaces, commas or other
+    characters. To create a list object from the lines, the function will split the lines using the
+    split parameter, sparam, and then read the elements in that list from list[0] to list[index]. 
+    This operation is preformed on the first and last line of the loglines before they are returned
+    as a tuple. """
+    # If sparam is None, split by whitespace
+    if sparam == None:
+        sparam = ' '
 
-
-import sys
-from collections import defaultdict
-
-
-def element(list_obj, index):
-    """Counts the occurence of a single list element at a speciffic index position. If the index
-    position is None it will not take this inot account. The function returns a dictionary."""
-    counts = defaultdict(int)
-
-    for obj in list_obj:
-        if index == None:
-            counts[obj] += 1
-
-        if index != None:
-            counts[obj[index]] += 1
-
-    return dict(counts)
-
-
-def uniqElements(list_obj):
-	"""Counts the number of unique elements in the list object and appends those to the uniq_list
-	before its returned. """
-	uniq_list = []
-	
-	for obj in list_obj:
-		if obj not in uniq_list:
-			uniq_list.append(obj)
-
-	return uniq_list
-
-
-def nrOfItems(list_obj):
-	"""This counts the total number of elements in a given list_obj. """
-	return len(list_obj)
+    start = ''.join(loglines[0].split(sparam)[0:index][0])
+    ended = ''.join(loglines[-1].split(sparam)[0:index][0])
+ 
+    return start, ended

@@ -44,6 +44,7 @@ def source(items, nol):
     print '{0}\n{1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
+
     print ''
 
 
@@ -59,6 +60,7 @@ def origin(items, nol):
     print '{0}\n{1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
+
     print ''
 
 
@@ -74,6 +76,7 @@ def passwd(items, nol):
     print '{0}\n{1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
+
     print ''
 
 
@@ -132,3 +135,17 @@ def foundlogin(items, nol):
     for std in stdout_list[:nol]:
         print std
     print ''
+
+
+def summary(ltime, attnr, ipv4nr, cnr, usrnr, uqpaswd, uqcomb):
+    """Formats and outputs the attack summary. """
+    print '\n  ========= Dates =========='
+    print '  Start:', ltime[0]
+    print '  End:  ', ltime[1]
+    print '  ======== Totals =========='
+    print '  Attacks:{0:>13}'.format(attnr)
+    print '  IPv4:{0:>13}'.format(ipv4nr)
+    print '  Contries{0:>10}'.format(cnr)
+    print '  Usernames:{0:>9}'.format(usrnr)
+    print '  Passwords:{0:>10}'.format(uqpaswd)
+    print '  Combos:{0:>13}\n'.format(uqcomb)

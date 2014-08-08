@@ -34,14 +34,14 @@ import operator
 
 def source(items, nol):
     """Formats and prints the results showing source IP stats. """
-    banner = '   {0}   {1}'.format('Hits', 'IP address')
-    header = '-' * 33
+    banner = '{0:>9}{1:>20}'.format('Hits', 'IP address')
+    header = '=' * 36
     stdout_list = []
     
     for key, value in sorted(items.iteritems(), key=operator.itemgetter(1), reverse=True):
-        stdout_list.append('{0:>7}   {1}'.format(value, key))
+        stdout_list.append('{0:>9}   {1}'.format(value, key))
 
-    print '{0}\n{1}'.format(banner, header)
+    print '{0}\n {1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
 
@@ -50,14 +50,14 @@ def source(items, nol):
 
 def origin(items, nol):
     """Formats and prints the results showing country of origin. """
-    banner = '   {0}   {1}'.format('Hits', 'Country of origin')
-    header = '-' * 33
+    banner = '{0:>9}{1:>20}'.format('Hits', 'Country of origin')
+    header = '=' * 36
     stdout_list = []
 
     for key, value in sorted(items.iteritems(), key=operator.itemgetter(1), reverse=True):
-        stdout_list.append('{0:>7}   {1}'.format(value, key))
+        stdout_list.append('{0:>9}   {1}'.format(value, key))
 
-    print '{0}\n{1}'.format(banner, header)
+    print '{0}\n {1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
 
@@ -66,14 +66,14 @@ def origin(items, nol):
 
 def passwd(items, nol):
     """Formats and prints the results showing password frequency. """
-    banner = '  {0}   {1}'.format('Tries', 'Password')
-    header = '-' * 33
+    banner = '{0:>9}{1:>11}'.format('Tries', 'Password')
+    header = '=' * 36
     stdout_list = []
 
     for key, value in sorted(items.iteritems(), key=operator.itemgetter(1), reverse=True):
-        stdout_list.append('{0:>7}   {1}'.format(value, key))
+        stdout_list.append('{0:>9}   {1}'.format(value, key))
 
-    print '{0}\n{1}'.format(banner, header)
+    print '{0}\n {1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
 
@@ -82,14 +82,14 @@ def passwd(items, nol):
 
 def usrnames(items, nol):
     """Formats and prints the results showing username frequency. """
-    banner = '  {0}   {1}'.format('Tries', 'Username')
-    header = '-' * 33
+    banner = '{0:>9}{1:>11}'.format('Tries', 'Username')
+    header = '=' * 36
     stdout_list = []
 
     for key, value in sorted(items.iteritems(), key=operator.itemgetter(1), reverse=True):
-        stdout_list.append('{0:>7}   {1}'.format(value, key))
+        stdout_list.append('{0:>9}   {1}'.format(value, key))
 
-    print '{0}\n{1}'.format(banner, header)
+    print '{0}\n {1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
     print ''
@@ -97,14 +97,14 @@ def usrnames(items, nol):
 
 def combinations(items, nol):
     """Formats and prints the results showing user/password combination frequency. """
-    banner = '  {0}   {1}'.format('Tries', 'Combinations')
-    header = '-' * 33
+    banner = '{0:>9}{1:>15}'.format('Tries', 'Combinations')
+    header = '=' * 36
     stdout_list = []
 
     for key, value in sorted(items.iteritems(), key=operator.itemgetter(1), reverse=True):
-        stdout_list.append('{0:>7}   {1}'.format(value, key))
+        stdout_list.append('{0:>9}   {1}'.format(value, key))
 
-    print '{0}\n{1}'.format(banner, header)
+    print '{0}\n {1}'.format(banner, header)
     for std in stdout_list[:nol]:
         print std
     print ''
@@ -113,7 +113,7 @@ def combinations(items, nol):
 def foundlogin(items, nol):
     banner = '  {0:<12} {1:<10} {4:<16} {5:<8} {2:<11} {3:<9}'.format('Date', 'Time', 'User',
                                                             'Password', 'IP address', 'Origin')
-    header = '-' * 85
+    header = '=' * 85
     stdout_list = []
     result = []
 
@@ -139,13 +139,13 @@ def foundlogin(items, nol):
 
 def summary(ltime, attnr, ipv4nr, cnr, usrnr, uqpaswd, uqcomb):
     """Formats and outputs the attack summary. """
-    print '\n  ========= Dates =========='
-    print '  Start:', ltime[0]
-    print '  End:  ', ltime[1]
-    print '  ======== Totals =========='
-    print '  Attacks:{0:>13}'.format(attnr)
-    print '  IPv4:{0:>13}'.format(ipv4nr)
-    print '  Contries{0:>10}'.format(cnr)
-    print '  Usernames:{0:>9}'.format(usrnr)
-    print '  Passwords:{0:>10}'.format(uqpaswd)
-    print '  Combos:{0:>13}\n'.format(uqcomb)
+    print '\n ============== Dates ==============='
+    print '{0:>14}{1:>23}'.format('First attack:', ltime[0])
+    print '{0:>13}{1:>24}'.format('Last attack:', ltime[1])
+    print '\n ============= Totals ==============='
+    print '{0:>9}{1:>28}'.format('Attacks:', attnr)
+    print '{0:>11}{1:>26}'.format('Passwords:', uqpaswd)
+    print '{0:>8}{1:>29}'.format('Combos:', uqcomb)
+    print '{0:>6}{1:>31}'.format('IPv4:', ipv4nr)
+    print '{0:>11}{1:>26}'.format('Usernames:', usrnr)
+    print '{0:>11}{1:>26}\n'.format('Countries:', cnr)

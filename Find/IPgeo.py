@@ -43,3 +43,47 @@ def cname(ipv4_list):
         output.append(gip)
 
     return output
+
+
+def ipv4Detailed(ipv4_list):
+    """Checks every element in the ipv4_list against the GeoIP database and returns as much
+    information as possible. The results will generate a dictionary that uses the IPv4 address as
+    the key and appends the details about it to a list, which then makes up the key structure. """
+    gi = GeoIP.open('/home/odin/Documents/PY_PKG/__OTHER__/GeoLiteCity.dat', GeoIP.GEOIP_STANDARD)
+    info_list = []
+    ipv4_dict = {}
+
+    for ipv4 in ipv4_list:
+        gir = gi.record_by_name(ipv4)
+        
+        if gir['country_name'] != None:
+            info_list.append('Country:\t{0}'.format(gir['country_name']))
+        
+        if gir['city'] != None:
+            info_list.append('City: \t{0}'.format(gir['city']))
+        
+        if gir['region'] != None:
+            info_list.append('Region:\t{0}'.format(gir['region']))
+        
+        if gir['region_name'] != None:
+            info_list.append('County:\t{0}'.format(gir['region_name']))
+
+        if gir['postal_code'] != None:
+            info_list.append('Zip code:\t{0}'.format(gir['postal_code']))
+
+        if gir['time_zone'] != None:
+            info_list.append('Time zone:\t{0}'.format(gir['time_zone']))
+
+        if gir['latitude'] != None:
+            info_list.append('Latitude:\t{0}'.format(gir['latitude']))
+
+        if gir['longitude'] != None:
+            info_list.append('Longitude:\t{0}'.format(gir['longitude']))
+
+        ipv4_dict[ipv4] = info_list
+        info_list = []
+
+    return ipv4_dict
+
+
+

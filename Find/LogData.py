@@ -44,3 +44,52 @@ def startEnd(loglines, sparam, index):
     ended = ''.join(loglines[-1].split(sparam)[0:index][0])
  
     return start, ended
+
+
+def logKeyword(loglines, kword):
+    """Searches trough the loglines containing the kword. Any loglines matching that word is
+    appended to the kw_list and returned. """
+    kw_list = []
+
+    for line in loglines:
+        if kword in line:
+            kw_list.append(line)
+
+    return kw_list
+
+
+def logIndex(log_obj, index, sparam):
+    """Splits the lines in the log_obj at the sparam and extracts a element from the resulting list
+    in the obj residing ad the given index position and appends it to the index_list. The index_list
+    is returned once all the objects in the log_obj have been processed. """
+    index_list = []
+
+    for obj in log_obj:
+        index_list.append(obj.split(sparam)[index])
+
+    return index_list
+
+
+def logIndexKey(log_obj, sparam, kword):
+    """Splits the lines in the log_obj at the sparam and itterates over the resulting list, if the
+    resulting list contais an element with the kword it adds that element to the ikey_list which is
+    returned. """
+    ikey_list = []
+
+    for obj in log_obj:
+        obj_list = obj.split(sparam)
+
+        for oline in obj_list:
+            if kword in oline:
+                ikey_list.append(oline)
+
+    return ikey_list
+
+
+
+
+
+
+
+
+

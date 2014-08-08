@@ -26,6 +26,7 @@ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import os
 import sys
+from Bifrozt.Calculate.Average import mean
 from Bifrozt.Count.Lists import element, nrOfItems, uniqElements
 from Bifrozt.FileProcessing.Read import filelines
 from Bifrozt.Find.Addresses import IPv4, IPv4part
@@ -39,6 +40,7 @@ from Bifrozt.System.Output import fwIRC
 
 
 def honsshData(args):
+    workdir = os.getcwd()
     logfiles = []
     loglines = []
     number = 50
@@ -59,6 +61,14 @@ def honsshData(args):
             loglines.append(lines.rstrip())
 
     if args.summry:
+        malwr_lines = []
+        os.chdir(workdir)
+        malwr_log = filelines(locate(args.hondir[0], 'downloads.log'))
+
+        for logfile, malwrlines in malwr_log.items():
+            for lines in malwrlines:
+                malwr_lines.append(lines)
+
         logstimed = startEnd(sorted(loglines), ',', 1)
         attacknum = nrOfItems(loglines)
         sourceips = sourceIPv4(loglines)
@@ -77,8 +87,12 @@ def honsshData(args):
         attemptedc = combos(loglines)
         comb_items = element(attemptedc, None)
         uniqcombos = nrOfItems(comb_items.keys())
-        summary(logstimed, attacknum, ipv4numbr, countrynr, 
-                usernamynr, uniqpasswd, uniqcombos)
+        malwrmd5 = logIndex(malwr_lines, 4, ',')
+        uniqmlwr = uniqElements(malwrmd5)
+        malwrtnr = len(malwr_lines)
+        umlwrmd5 = len(uniqmlwr)
+        summary(logstimed, attacknum, ipv4numbr, countrynr, usernamynr, uniqpasswd, uniqcombos,
+                logfiles, malwrtnr, umlwrmd5)
 
     if args.source:
         sourceips = sourceIPv4(loglines)

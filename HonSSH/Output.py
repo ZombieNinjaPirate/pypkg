@@ -137,15 +137,33 @@ def foundlogin(items, nol):
     print ''
 
 
-def summary(ltime, attnr, ipv4nr, cnr, usrnr, uqpaswd, uqcomb):
+def summary(ltime, attnr, ipv4nr, cnr, usrnr, uqpaswd, uqcomb, logsnr, mwtnr, umvmd5):
     """Formats and outputs the attack summary. """
-    print '\n ============== Dates ==============='
+    print '\n ============== Period =============='
     print '{0:>14}{1:>23}'.format('First attack:', ltime[0])
-    print '{0:>13}{1:>24}'.format('Last attack:', ltime[1])
-    print '\n ============= Totals ==============='
+    print '{0:>15}{1:>22}'.format('Latest attack:', ltime[1])
+
+    print '\n ============== Total ==============='
     print '{0:>9}{1:>28}'.format('Attacks:', attnr)
-    print '{0:>11}{1:>26}'.format('Passwords:', uqpaswd)
-    print '{0:>8}{1:>29}'.format('Combos:', uqcomb)
+    print '{0:>11}{1:>26}'.format('Countries:', cnr)
     print '{0:>6}{1:>31}'.format('IPv4:', ipv4nr)
+    print '{0:>11}{1:>26}'.format('Passwords:', uqpaswd)
     print '{0:>11}{1:>26}'.format('Usernames:', usrnr)
-    print '{0:>11}{1:>26}\n'.format('Countries:', cnr)
+    print '{0:>8}{1:>29}'.format('Combos:', uqcomb)
+
+    attprd = float(attnr) / len(logsnr)
+    attprh = attprd / 24
+    attprm = attprh / 60
+    attprc = float(attnr) / cnr
+    attpri = float(attnr) / ipv4nr
+
+    print '\n ========== Attack Average =========='
+    print '{0:>12}{1:>25.3f}'.format('Pr/country:', attprc)
+    print '{0:>9}{1:>28.3f}'.format('Pr/IPv4:', attpri)
+    print '{0:>8}{1:>29.3f}'.format('Pr/day:', attprd)
+    print '{0:>9}{1:>28.3f}'.format('Pr/hour:', attprh)
+    print '{0:>8}{1:>29.3f}'.format('Pr/min:', attprm)
+
+    print '\n ========= Downloaded Files ========='
+    print '{0:>7}{1:>30}'.format('Total:', mwtnr)
+    print '{0:>12}{1:>25}\n'.format('Unique MD5:', umvmd5)

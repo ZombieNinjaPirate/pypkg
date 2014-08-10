@@ -57,28 +57,28 @@ def ipv4Detailed(ipv4_list):
         gir = gi.record_by_name(ipv4)
         
         if gir['country_name'] != None:
-            info_list.append('Country:\t{0}'.format(gir['country_name']))
+            info_list.append('Country: {0:>25}'.format(gir['country_name']))
         
         if gir['city'] != None:
-            info_list.append('City: \t{0}'.format(gir['city']))
+            info_list.append('City: {0:>28}'.format(gir['city']))
         
         if gir['region'] != None:
-            info_list.append('Region:\t{0}'.format(gir['region']))
+            info_list.append('Region: {0:>26}'.format(gir['region']))
         
         if gir['region_name'] != None:
-            info_list.append('County:\t{0}'.format(gir['region_name']))
+            info_list.append('County: {0:>26}'.format(gir['region_name']))
 
         if gir['postal_code'] != None:
-            info_list.append('Zip code:\t{0}'.format(gir['postal_code']))
+            info_list.append('Zip code: {0:>24}'.format(gir['postal_code']))
 
         if gir['time_zone'] != None:
-            info_list.append('Time zone:\t{0}'.format(gir['time_zone']))
+            info_list.append('Time zone: {0:>23}'.format(gir['time_zone']))
 
         if gir['latitude'] != None:
-            info_list.append('Latitude:\t{0}'.format(gir['latitude']))
+            info_list.append('Latitude: {0:>24}'.format(gir['latitude']))
 
         if gir['longitude'] != None:
-            info_list.append('Longitude:\t{0}'.format(gir['longitude']))
+            info_list.append('Longitude: {0:>23}'.format(gir['longitude']))
 
         ipv4_dict[ipv4] = info_list
         info_list = []

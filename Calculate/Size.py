@@ -24,16 +24,9 @@ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 
-__author__ = 'Are Hansen'
-__date__ = '2014, Aug 3'
-__version__ = '0.0.1'
+from hurry.filesize import size, alternative
 
 
-def fwIRC(data_out):
-	"""Processes and outputs the results of the firewall.log's parsing for IRC dest. """
-	print '\n ========= IRC Destinations ========='
-	for irc, detail in data_out.items():
-	    print ' IRC address: {0:>23}'.format(irc)
-	    for info in detail:
-	        print ' - {0}'.format(info)
-	    print ''
+def btomb(kb_int):
+	"""Converts an integer of bytes to mega bytes and returns the result as a string. """
+	return size(kb_int, system=alternative)

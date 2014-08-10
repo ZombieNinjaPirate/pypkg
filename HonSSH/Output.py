@@ -137,33 +137,33 @@ def foundlogin(items, nol):
     print ''
 
 
-def summary(ltime, attnr, ipv4nr, cnr, usrnr, uqpaswd, uqcomb, logsnr, mwtnr, umvmd5):
+def summary(ltime, attnr, ipv4nr, cnr, usrnr, uqpaswd, uqcomb, logsnr, mwtnr, umvmd5, umurl, umips, 
+            umnam, uircip, uirccn, uhttpip, uhttpcn, synfld, udpfld):
     """Formats and outputs the attack summary. """
-    print '\n ============== Period =============='
-    print '{0:>14}{1:>23}'.format('First attack:', ltime[0])
-    print '{0:>15}{1:>22}'.format('Latest attack:', ltime[1])
-
-    print '\n ============== Total ==============='
-    print '{0:>9}{1:>28}'.format('Attacks:', attnr)
-    print '{0:>11}{1:>26}'.format('Countries:', cnr)
-    print '{0:>6}{1:>31}'.format('IPv4:', ipv4nr)
-    print '{0:>11}{1:>26}'.format('Passwords:', uqpaswd)
-    print '{0:>11}{1:>26}'.format('Usernames:', usrnr)
-    print '{0:>8}{1:>29}'.format('Combos:', uqcomb)
-
     attprd = float(attnr) / len(logsnr)
     attprh = attprd / 24
     attprm = attprh / 60
+    attprs = attprm / 60
     attprc = float(attnr) / cnr
     attpri = float(attnr) / ipv4nr
 
-    print '\n ========== Attack Average =========='
-    print '{0:>12}{1:>25.3f}'.format('Pr/country:', attprc)
-    print '{0:>9}{1:>28.3f}'.format('Pr/IPv4:', attpri)
-    print '{0:>8}{1:>29.3f}'.format('Pr/day:', attprd)
-    print '{0:>9}{1:>28.3f}'.format('Pr/hour:', attprh)
-    print '{0:>8}{1:>29.3f}'.format('Pr/min:', attprm)
+    print '\n{0:>50}'.format('--- Bifrozt Summary ---')
+    print '\n{0:>56}'.format('============== Period ==============')
+    print '{0:>33}{1:>23}'.format('First attack:', ltime[0])
+    print '{0:>34}{1:>22}'.format('Latest attack:', ltime[1])
 
-    print '\n ========= Downloaded Files ========='
-    print '{0:>7}{1:>30}'.format('Total:', mwtnr)
-    print '{0:>12}{1:>25}\n'.format('Unique MD5:', umvmd5)
+    print '\n ============== Total ===============   ========== Attack Average =========='
+    print '{0:>9}{1:>28}{2:>15}{3:>24.3f}'.format('Attacks:', attnr, 'Per country:', attprc)
+    print '{0:>11}{1:>26}{2:>12}{3:>27.3f}'.format('Countries:', cnr, 'Per IPv4:', attpri)
+    print '{0:>6}{1:>31}{2:>11}{3:>28.3f}'.format('IPv4:', ipv4nr, 'Per day:', attprd)
+    print '{0:>11}{1:>26}{2:>12}{3:>27.3f}'.format('Passwords:', uqpaswd, 'Per hour:', attprh)
+    print '{0:>11}{1:>26}{2:>11}{3:>28.3f}'.format('Usernames:', usrnr, 'Per min:', attprm)
+    print '{0:>8}{1:>29}{2:>11}{3:>28.3f}'.format('Combos:', uqcomb, 'Per sec:', attprs)
+
+    print '\n ========= Downloaded Files =========   ========= Outbound traffic ========='
+    print '{0:>13}{1:>24}{2:>21}{3:>18}'.format('Total files:', mwtnr, 'HTTP destinations:', uhttpip)
+    print '{0:>13}{1:>24}{2:>17}{3:>22}'.format('Unique URLs:', umurl, 'IRC countries:', uirccn)
+    print '{0:>12}{1:>25}{2:>20}{3:>19}'.format('Unique MD5:', umvmd5, 'IRC destinations:', uircip)
+    print '{0:>18}{1:>19}{2:>21}{3:>18}'.format('Unique filenames:', umnam, 'Blocked SYN-flood:', synfld)
+    print '{0:>18}{1:>19}{2:>21}{3:>18}\n'.format('Unique attackers:', umips, 'Blocked UDP-flood:', udpfld)
+

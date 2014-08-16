@@ -140,17 +140,31 @@ def foundlogin(items, nol):
 def summary(ltime, attnr, ipv4nr, cnr, usrnr, uqpaswd, uqcomb, logsnr, mwtnr, umvmd5, umurl, umips, 
             umnam, uircip, uirccn, uhttpip, uhttpcn, synfld, udpfld):
     """Formats and outputs the attack summary. """
-    attprd = float(attnr) / len(logsnr)
-    attprh = attprd / 24
-    attprm = attprh / 60
-    attprs = attprm / 60
-    attprc = float(attnr) / cnr
-    attpri = float(attnr) / ipv4nr
+    if attnr != 0:
+        attprd = float(attnr) / len(logsnr)
+        attprh = attprd / 24
+        attprm = attprh / 60
+        attprs = attprm / 60
+        attprc = float(attnr) / cnr
+        attpri = float(attnr) / ipv4nr
 
-    print '\n{0:>50}'.format('--- Bifrozt Summary ---')
+    if attnr == 0:
+        attprd = 0
+        attprh = 0
+        attprm = 0
+        attprs = 0
+        attprc = 0
+        attpri = 0
+
     print '\n{0:>56}'.format('============== Period ==============')
-    print '{0:>33}{1:>23}'.format('First attack:', ltime[0])
-    print '{0:>34}{1:>22}'.format('Latest attack:', ltime[1])
+
+    if ltime != 0: 
+        print '{0:>33}{1:>23}'.format('First attack:', ltime[0])
+        print '{0:>34}{1:>22}'.format('Latest attack:', ltime[1])
+
+    if ltime == 0: 
+        print '{0:>33}{1:>23}'.format('First attack:', 'n/a')
+        print '{0:>34}{1:>22}'.format('Latest attack:', 'n/a')
 
     print '\n ============== Total ===============   ========== Attack Average =========='
     print '{0:>9}{1:>28}{2:>15}{3:>24.3f}'.format('Attacks:', attnr, 'Per country:', attprc)

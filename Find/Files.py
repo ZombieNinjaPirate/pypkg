@@ -45,8 +45,8 @@ def locate(filepath, filename):
     for files in glob.glob('{0}*'.format(filename)):
         file_list.append('{0}'.format(files))
 
-    if len(file_list) == 0:
-        print 'ERROR: No files mathcing "{0}" found in "{1}"'.format(filepath, filename)
-        sys.exit(1)
+    # if len(file_list) == 0:
+    #     print 'ERROR: No files mathcing "{0}" found in "{1}"'.format(filepath, filename)
+    #     sys.exit(1)
 
     return file_list

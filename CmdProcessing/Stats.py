@@ -143,6 +143,27 @@ def firewallData(args):
 
 
 def dataSummary(args):
+    """bla bla blaaaa  """
+    logstimed = 0
+    attacknum = 0
+    ipv4numbr = 0
+    countrynr = 0
+    usernamynr = 0
+    uniqpasswd = 0 
+    uniqcombos = 0
+    malwrtnr = 0
+    umlwrmd5 = 0
+    unrmwurl = 0
+    uniqmips = 0
+    unimname = 0
+    unircip = 0
+    uniccna = 0
+    unhttpip = 0
+    unihcna = 0
+    synflood = 0
+    udpflood = 0
+
+    # - daily logs
     workdir = os.getcwd()
     logfiles = []
     loglines = []
@@ -153,63 +174,67 @@ def dataSummary(args):
 
     honssh_logs = filelines(locate(args.summry[0], '20'))
 
-    for log, logdata in honssh_logs.items():
-        logfiles.append(log)
+    if len(honssh_logs) != 0:
+        for log, logdata in honssh_logs.items():
+            logfiles.append(log)
 
-        for lines in logdata:
-            loglines.append(lines.rstrip())
+            for lines in logdata:
+                loglines.append(lines.rstrip())
 
+        logstimed = startEnd(sorted(loglines), ',', 1)
+        attacknum = nrOfItems(loglines)
+        sourceips = sourceIPv4(loglines)
+        uniqueips = uniqElements(sourceips)
+        ipv4numbr = nrOfItems(uniqueips)
+        findcname = cname(sourceips)
+        countname = element(findcname, None)
+        countrynr = nrOfItems(countname.keys())
+        usedunames = users(loglines)
+        user_items = element(usedunames, None)
+        uniqusrnam = uniqElements(user_items)
+        usernamynr = nrOfItems(uniqusrnam)
+        usedpasswd = passwords(loglines)
+        pass_items = element(usedpasswd, None)
+        uniqpasswd = nrOfItems(pass_items.keys())
+        attemptedc = combos(loglines)
+        comb_items = element(attemptedc, None)
+        uniqcombos = nrOfItems(comb_items.keys())
+
+    # - downloads.log
     malwr_lines = []
     os.chdir(workdir)
     malwr_log = filelines(locate(args.summry[0], 'downloads.log'))
 
-    for logfile, malwrlines in malwr_log.items():
-        for lines in malwrlines:
-            malwr_lines.append(lines)
+    if len(malwr_log) != 0:
+        for logfile, malwrlines in malwr_log.items():
+            for lines in malwrlines:
+                malwr_lines.append(lines)
 
-    logstimed = startEnd(sorted(loglines), ',', 1)
-    attacknum = nrOfItems(loglines)
-    sourceips = sourceIPv4(loglines)
-    uniqueips = uniqElements(sourceips)
-    ipv4numbr = nrOfItems(uniqueips)
-    findcname = cname(sourceips)
-    countname = element(findcname, None)
-    countrynr = nrOfItems(countname.keys())
-    usedunames = users(loglines)
-    user_items = element(usedunames, None)
-    uniqusrnam = uniqElements(user_items)
-    usernamynr = nrOfItems(uniqusrnam)
-    usedpasswd = passwords(loglines)
-    pass_items = element(usedpasswd, None)
-    uniqpasswd = nrOfItems(pass_items.keys())
-    attemptedc = combos(loglines)
-    comb_items = element(attemptedc, None)
-    uniqcombos = nrOfItems(comb_items.keys())
+        malwrtnr = len(malwr_lines)
 
-    malwrtnr = len(malwr_lines)
+        malwrmd5 = logIndex(malwr_lines, 4, ',')
+        uniqmlwr = uniqElements(malwrmd5)
+        umlwrmd5 = len(uniqmlwr)
 
-    malwrmd5 = logIndex(malwr_lines, 4, ',')
-    uniqmlwr = uniqElements(malwrmd5)
-    umlwrmd5 = len(uniqmlwr)
+        malwrurl = logIndex(malwr_lines, 2, ',')
+        unimwurl = uniqElements(malwrurl)
+        unrmwurl = len(unimwurl)
 
-    malwrurl = logIndex(malwr_lines, 2, ',')
-    unimwurl = uniqElements(malwrurl)
-    unrmwurl = len(unimwurl)
+        malwrips = logIndex(malwr_lines, 1, ',')
+        unimwips = uniqElements(malwrips)
+        uniqmips = len(unimwips)
 
-    malwrips = logIndex(malwr_lines, 1, ',')
-    unimwips = uniqElements(malwrips)
-    uniqmips = len(unimwips)
+        mlwnames = logIndex(malwr_lines, 2, ',')
 
-    mlwnames = logIndex(malwr_lines, 2, ',')
+        malware_names = []
 
-    malware_names = []
+        for name in mlwnames:
+            malware_names.append(name.split('/')[-1])
 
-    for name in mlwnames:
-        malware_names.append(name.split('/')[-1])
+        uniqname = uniqElements(malware_names)
+        unimname = len(uniqname)
 
-    uniqname = uniqElements(malware_names)
-    unimname = len(uniqname)
-
+    # - firewall.log
     os.chdir(workdir)
     fwfiles = []
     fwlines = []
@@ -220,37 +245,38 @@ def dataSummary(args):
 
     firewall_logs = filelines(locate(args.summry[1], 'firewall'))
 
-    for log, logdata in firewall_logs.items():
-        fwfiles.append(log)
+    if len(fwfiles) != 0:
+        for log, logdata in firewall_logs.items():
+            fwfiles.append(log)
 
-        for lines in logdata:
-            fwlines.append(lines.rstrip())
+            for lines in logdata:
+                fwlines.append(lines.rstrip())
 
-    findirc = logKeyword(fwlines, 'IRC')
-    ircdest = logIndexKey(findirc, None, 'DST')
-    ircipv4 = logIndex(ircdest, -1, '=')
-    uniqirc = uniqElements(ircipv4)
+        findirc = logKeyword(fwlines, 'IRC')
+        ircdest = logIndexKey(findirc, None, 'DST')
+        ircipv4 = logIndex(ircdest, -1, '=')
+        uniqirc = uniqElements(ircipv4)
 
-    unircip = len(uniqirc)
-    ircnane = cname(uniqirc)
-    uncname = uniqElements(ircnane)
-    uniccna = len(uncname)
+        unircip = len(uniqirc)
+        ircnane = cname(uniqirc)
+        uncname = uniqElements(ircnane)
+        uniccna = len(uncname)
 
-    findhttp = logKeyword(fwlines, 'HTTP')
-    httpdest = logIndexKey(findhttp, None, 'DST')
-    httpipv4 = logIndex(httpdest, -1, '=')
-    uniqhttp = uniqElements(httpipv4)
+        findhttp = logKeyword(fwlines, 'HTTP')
+        httpdest = logIndexKey(findhttp, None, 'DST')
+        httpipv4 = logIndex(httpdest, -1, '=')
+        uniqhttp = uniqElements(httpipv4)
 
-    unhttpip = len(uniqhttp)
-    httpnane = cname(uniqhttp)
-    unhname = uniqElements(httpnane)
-    unihcna = len(unhname)
+        unhttpip = len(uniqhttp)
+        httpnane = cname(uniqhttp)
+        unhname = uniqElements(httpnane)
+        unihcna = len(unhname)
 
-    findsynf = logKeyword(fwlines, 'SYN-flood')
-    synflood = len(findsynf)
+        findsynf = logKeyword(fwlines, 'SYN-flood')
+        synflood = len(findsynf)
 
-    findudpf = logKeyword(fwlines, 'UDP-flood')
-    udpflood = len(findudpf)
+        findudpf = logKeyword(fwlines, 'UDP-flood')
+        udpflood = len(findudpf)
 
     summary(logstimed, attacknum, ipv4numbr, countrynr, usernamynr, uniqpasswd, uniqcombos,
             logfiles, malwrtnr, umlwrmd5, unrmwurl, uniqmips, unimname, unircip, uniccna, unhttpip,
